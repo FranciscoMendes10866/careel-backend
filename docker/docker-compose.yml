@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:alpine
+    restart: always
+    container_name: careel
+    ports:
+      - "6060:5432"
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: careel
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d/
