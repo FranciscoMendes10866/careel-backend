@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",                          
+    "module": "commonjs",                     
+    "lib": ["ES2017"],                             
+    "allowJs": true,                       
+    "outDir": "./build",                        
+    "rootDir": "./src",                       
+    "removeComments": true,                
+    "typeRoots": [
+      "./node_modules/@types"
+    ],                          
+    "esModuleInterop": true,                  
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,        
+    "emitDecoratorMetadata": true,         
+    "skipLibCheck": true,                     
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@controllers/*": ["./src/controllers/*"],
+      "@configs/*": ["./src/configs/*"],
+      "@guards/*": ["./src/guards/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@routes/*": ["./src/routes/*"]
+    }
+  },
+  "include": [
+    "src/**/*", "babel.config.js"
+  ]
+}
