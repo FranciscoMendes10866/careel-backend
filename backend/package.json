@@ -4,7 +4,7 @@
   "main": "main.js",
   "license": "CC0-1.0",
   "scripts": {
-    "dev": "clear && ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify --files ./src/main.ts",
+    "dev": "clear && ts-node-dev --cls -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify --files ./src/main.ts",
     "build": "babel src --extensions \".js,.ts\" --out-dir build --copy-files --no-copy-ignored",
     "serve": "node ./build/main.js",
     "lint": "eslint src --ext .ts",
