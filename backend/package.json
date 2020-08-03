@@ -4,7 +4,7 @@
   "main": "main.js",
   "license": "CC0-1.0",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify --files ./src/main.ts",
+    "dev": "clear && ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify --files ./src/main.ts",
     "build": "babel src --extensions \".js,.ts\" --out-dir build --copy-files --no-copy-ignored",
     "serve": "node ./build/main.js",
     "lint": "eslint src --ext .ts",
@@ -26,6 +26,7 @@
     "koa-bodyparser": "^4.3.0",
     "koa-compress": "^5.0.1",
     "koa-cors": "^0.0.16",
+    "koa-exception": "^1.0.6",
     "koa-helmet": "^5.2.0",
     "koa-logger": "^3.2.1",
     "koa-response-time": "^2.1.0",

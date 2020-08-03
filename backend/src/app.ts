@@ -5,13 +5,13 @@ import helmet from 'koa-helmet'
 import compress from 'koa-compress'
 import logger from 'koa-logger'
 import responseTime from 'koa-response-time'
+import KoaEx from 'koa-exception'
 
 import authRoutes from '@routes/auth.router'
-import HttpException from '@exceptions/http-exception.filter'
 
 const app = new Koa()
 
-app.use(HttpException)
+app.use(KoaEx())
 app.use(responseTime({ hrtime: true }))
 app.use(BodyParser())
 app.use(cors())
