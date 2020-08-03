@@ -17,8 +17,7 @@ module.exports = {
 				'@configs': './src/configs',
 				'@guards': './src/guards',
 				'@middlewares': './src/middlewares',
-				'@routes': './src/routes',
-				'@exceptions': './src/exceptions'
+				'@routes': './src/routes'
 			}
 		}]
 	],
