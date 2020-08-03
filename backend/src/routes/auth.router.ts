@@ -2,7 +2,7 @@ import Router from 'koa-router'
 
 import { SignUp } from '@controllers/auth.controller'
 
-const router = new Router()
+const router: Router = new Router()
 
 router.get('/', SignUp)
 

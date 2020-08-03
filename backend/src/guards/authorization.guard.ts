@@ -1,5 +1,7 @@
+import { Context, Next } from 'koa'
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const authorization = async (ctx, next) => {
+const authorization = async (ctx: Context, next: Next) => {
 	// Get auth header value
 	const bearerHeader = ctx.header.authorization
 	// Check if bearer is undefined

@@ -8,7 +8,7 @@ import KoaEx from 'koa-exception'
 
 import authRoutes from '@routes/auth.router'
 
-const app = new Koa()
+const app: Koa = new Koa()
 
 app.use(KoaEx())
 app.use(BodyParser())
