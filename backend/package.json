@@ -15,8 +15,8 @@
     "prisma:migrate": "prisma migrate up --experimental"
   },
   "dependencies": {
-    "@prisma/cli": "^2.3.0",
-    "@prisma/client": "^2.3.0",
+    "@prisma/cli": "^2.4.1",
+    "@prisma/client": "^2.4.1",
     "bcrypt": "^5.0.0",
     "cloudinary": "^1.22.0",
     "dotenv": "^8.2.0",
