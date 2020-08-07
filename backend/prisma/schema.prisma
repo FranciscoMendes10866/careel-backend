@@ -35,7 +35,7 @@ model Profile {
   field           String
   contact         String @unique
   profile_picture String
-  User            User   @relation(fields: [user_id], references: [id])
+  user            User   @relation(fields: [user_id], references: [id])
   user_id         String @unique
 }
 
@@ -45,14 +45,14 @@ model Education {
   course_level   String
   course_college String
   course_date    String
-  User           User   @relation(fields: [user_id], references: [id])
+  user           User   @relation(fields: [user_id], references: [id])
   user_id        String
 }
 
 model Abilities {
   id      String @id @default(cuid())
   ability String
-  User    User   @relation(fields: [user_id], references: [id])
+  user    User   @relation(fields: [user_id], references: [id])
   user_id String
 }
 
@@ -63,14 +63,14 @@ model Experiences {
   project_name String
   project_link String
   job_date     String
-  User         User   @relation(fields: [user_id], references: [id])
+  user         User   @relation(fields: [user_id], references: [id])
   user_id      String
 }
 
 model Languages {
   id       String @id @default(cuid())
   language String
-  User     User   @relation(fields: [user_id], references: [id])
+  user     User   @relation(fields: [user_id], references: [id])
   user_id  String
 }
 
@@ -78,6 +78,6 @@ model Portfolios {
   id           String @id @default(cuid())
   website_name String
   website_link String
-  User         User   @relation(fields: [user_id], references: [id])
+  user         User   @relation(fields: [user_id], references: [id])
   user_id      String
 }
