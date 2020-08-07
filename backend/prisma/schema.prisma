@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          String        @id @default(cuid())
+  email       String        @unique
+  password    String
+  role        String
+  is_public   Boolean
+  profile     Profile?
+  education   Education[]
+  abilities   Abilities[]
+  experiences Experiences[]
+  languages   Languages[]
+  portfolios  Portfolios[]
+}
+
+model Profile {
+  id              String @id @default(cuid())
+  first_name      String
+  last_name       String
+  country         String
+  city            String
+  description     String
+  job_title       String
+  field           String
+  contact         String @unique
+  profile_picture String
+  User            User   @relation(fields: [user_Id], references: [id])
+  user_Id         String @unique
+}
+
+model Education {
+  id             String @id @default(cuid())
+  course_name    String
+  course_level   String
+  course_college String
+  course_date    String
+  User           User   @relation(fields: [user_Id], references: [id])
+  user_Id        String
+}
+
+model Abilities {
+  id      String @id @default(cuid())
+  ability String
+  User    User   @relation(fields: [user_Id], references: [id])
+  user_Id String
+}
+
+model Experiences {
+  id           String @id @default(cuid())
+  job_title    String
+  company_name String
+  project_name String
+  project_link String
+  job_date     String
+  User         User   @relation(fields: [user_Id], references: [id])
+  user_Id      String
+}
+
+model Languages {
+  id       String @id @default(cuid())
+  language String
+  User     User   @relation(fields: [user_Id], references: [id])
+  user_Id  String
+}
+
+model Portfolios {
+  id           String @id @default(cuid())
+  website_name String
+  website_link String
+  User         User   @relation(fields: [user_Id], references: [id])
+  user_Id      String
+}
