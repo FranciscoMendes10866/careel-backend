@@ -8,6 +8,11 @@ import KoaEx from 'koa-exception'
 
 import authRoutes from '@routes/auth.router'
 import accountRoutes from '@routes/account.router'
+import educationRoutes from '@routes/education.router'
+import abilitiesRoutes from '@routes/abilities.router'
+import experiencesRoutes from '@routes/experiences.router'
+import languagesRoutes from '@routes/languages.router'
+import portfoliosRoutes from '@routes/portolios.router'
 
 const app: Koa = new Koa()
 
@@ -19,5 +24,10 @@ app.use(logger())
 app.use(compress())
 app.use(authRoutes.routes())
 app.use(accountRoutes.routes())
+app.use(educationRoutes.routes())
+app.use(abilitiesRoutes.routes())
+app.use(experiencesRoutes.routes())
+app.use(languagesRoutes.routes())
+app.use(portfoliosRoutes.routes())
 
 export default app

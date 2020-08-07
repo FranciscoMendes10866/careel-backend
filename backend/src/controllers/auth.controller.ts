@@ -14,7 +14,7 @@ const sign_up = async (ctx: Context) => {
 	}
 	const hashed = bcrypt.hashSync(password, 10)
 	const user = await prisma.user.create({ data: { email, password: hashed, role } })
-	ctx.body = { user }
+	return ctx.body = { user }
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -29,7 +29,7 @@ const sign_in = async (ctx: Context) => {
 		ctx.throw(400, 'Password don\'t match.')
 	}
 	const token = jwt.sign({ id: exists.id, role: exists.role }, process.env.JWT_SECRET)
-	ctx.body = { token }
+	return ctx.body = { token }
 }
 
 export {

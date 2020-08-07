@@ -16,7 +16,7 @@ const change_password = async (ctx: Context) => {
 			password: hashed
 		}
 	})
-	ctx.body = 200
+	return ctx.body = 200
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -30,7 +30,7 @@ const change_email = async (ctx: Context) => {
 			email: email
 		}
 	})
-	ctx.body = 200
+	return ctx.body = 200
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -44,7 +44,7 @@ const change_is_public = async (ctx: Context) => {
 			is_public: is_public
 		}
 	})
-	ctx.body = 200
+	return ctx.body = 200
 }
 
 export {
