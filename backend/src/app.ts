@@ -7,6 +7,7 @@ import logger from 'koa-logger'
 import KoaEx from 'koa-exception'
 
 import authRoutes from '@routes/auth.router'
+import accountRoutes from '@routes/account.router'
 
 const app: Koa = new Koa()
 
@@ -17,5 +18,6 @@ app.use(helmet())
 app.use(logger())
 app.use(compress())
 app.use(authRoutes.routes())
+app.use(accountRoutes.routes())
 
 export default app

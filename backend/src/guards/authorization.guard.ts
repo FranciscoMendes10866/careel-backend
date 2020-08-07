@@ -1,23 +1,26 @@
+// eslint-disable-next-line no-unused-vars
 import { Context, Next } from 'koa'
+import jwt from 'jsonwebtoken'
+
+// eslint-disable-next-line no-unused-vars
+import TokenPayload from '@interfaces/token.payload'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const authorization = async (ctx: Context, next: Next) => {
-	// Get auth header value
-	const bearerHeader = ctx.header.authorization
-	// Check if bearer is undefined
-	if (typeof bearerHeader !== 'undefined') {
-		// Split at the space
-		const bearer = bearerHeader.split(' ')
-		// Get token from array
-		const bearerToken = bearer[1]
-		// Set the token
-		ctx.token = bearerToken
-		// Next middleware
-		next()
-	} else {
-		// error
-		ctx.throw(401, 'Protected resource, access denied.')
+const auth_guard = async (ctx: Context, next: Next) => {
+	const { authorization } = ctx.headers
+	if (!authorization) {
+		return ctx.throw(403)
+	}
+	const token = authorization.replace('Bearer', '').trim()
+	try {
+		const data = jwt.verify(token, process.env.JWT_SECRET)
+		const { id, role } = data as TokenPayload
+		ctx.auth_id = id
+		ctx.auth_role = role
+		return next()
+	} catch {
+		return ctx.throw(403)
 	}
 }
-  
-export default authorization
+
+export { auth_guard }
