@@ -7,7 +7,7 @@ const education_policy = async (ctx: Context, next: Next) => {
 		course_name: Joi.string().min(2).max(30).required(),
 		course_level: Joi.string().min(2).max(30).required(),
 		course_college: Joi.string().min(2).max(30).required(),
-		course_date: Joi.string().min(2).max(30).required()
+		course_date: Joi.number().min(4).max(4).required()
 	})
 
 	const { course_name, course_level, course_college, course_date } = ctx.request.body
@@ -38,7 +38,7 @@ const education_policy = async (ctx: Context, next: Next) => {
 			break
 		}
 	}
-	next()
+	return next()
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -47,7 +47,7 @@ const update_education_policy = async (ctx: Context, next: Next) => {
 		course_name: Joi.string().min(2).max(30),
 		course_level: Joi.string().min(2).max(30),
 		course_college: Joi.string().min(2).max(30),
-		course_date: Joi.string().min(2).max(30)
+		course_date: Joi.number().min(4).max(4)
 	})
 
 	const { course_name, course_level, course_college, course_date } = ctx.request.body
@@ -78,7 +78,7 @@ const update_education_policy = async (ctx: Context, next: Next) => {
 			break
 		}
 	}
-	next()
+	return next()
 }
 
 export {

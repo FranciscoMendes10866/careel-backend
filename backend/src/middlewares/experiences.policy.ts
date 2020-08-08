@@ -8,7 +8,7 @@ const experiences_policy = async (ctx: Context, next: Next) => {
 		company_name: Joi.string().min(2).max(30).required(),
 		project_name: Joi.string().min(2).max(30).required(),
 		project_link: Joi.string().min(2).max(30).required(),
-		job_date: Joi.string().min(4).max(4).required()
+		job_date: Joi.number().min(4).max(4).required()
 	})
 
 	const { job_title, company_name, project_name, project_link, job_date } = ctx.request.body
@@ -43,7 +43,7 @@ const experiences_policy = async (ctx: Context, next: Next) => {
 			break
 		}
 	}
-	next()
+	return next()
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -53,7 +53,7 @@ const update_experience_policy = async (ctx: Context, next: Next) => {
 		company_name: Joi.string().min(2).max(30),
 		project_name: Joi.string().min(2).max(30),
 		project_link: Joi.string().min(2).max(30),
-		job_date: Joi.string().min(4).max(4)
+		job_date: Joi.number().min(4).max(4)
 	})
 
 	const { job_title, company_name, project_name, project_link, job_date } = ctx.request.body
@@ -88,7 +88,7 @@ const update_experience_policy = async (ctx: Context, next: Next) => {
 			break
 		}
 	}
-	next()
+	return next()
 }
 
 export {

@@ -20,7 +20,7 @@ const abilities_policy = async (ctx: Context, next: Next) => {
 			break
 		}
 	}
-	next()
+	return next()
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -42,7 +42,7 @@ const update_ability_policy = async (ctx: Context, next: Next) => {
 			break
 		}
 	}
-	next()
+	return next()
 }
 
 export {

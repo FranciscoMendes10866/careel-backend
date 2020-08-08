@@ -11,7 +11,7 @@ const profiles_policy = async (ctx: Context, next: Next) => {
 		description: Joi.string().min(4).max(250).required(),
 		job_title: Joi.string().min(4).max(20).required(),
 		field: Joi.string().min(4).max(20).required(),
-		contact: Joi.string().min(4).max(4).alphanum().required()
+		contact: Joi.string().required()
 	})
 
 	const { first_name, last_name, country, city, description, job_title, field, contact } = ctx.request.body
@@ -58,7 +58,7 @@ const profiles_policy = async (ctx: Context, next: Next) => {
 			break
 		}
 	}
-	next()
+	return next()
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -71,7 +71,7 @@ const update_profile_policy = async (ctx: Context, next: Next) => {
 		description: Joi.string().min(4).max(250),
 		job_title: Joi.string().min(4).max(20),
 		field: Joi.string().min(4).max(20),
-		contact: Joi.string().min(4).max(4).alphanum()
+		contact: Joi.string()
 	})
 
 	const { first_name, last_name, country, city, description, job_title, field, contact } = ctx.request.body
@@ -118,7 +118,7 @@ const update_profile_policy = async (ctx: Context, next: Next) => {
 			break
 		}
 	}
-	next()
+	return next()
 }
 
 export {
