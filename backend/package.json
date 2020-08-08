@@ -15,6 +15,7 @@
     "prisma:migrate": "prisma migrate up --experimental"
   },
   "dependencies": {
+    "@koa/multer": "^3.0.0",
     "@prisma/cli": "^2.4.1",
     "@prisma/client": "^2.4.1",
     "bcrypt": "^5.0.0",

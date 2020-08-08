@@ -13,6 +13,7 @@ import abilitiesRoutes from '@routes/abilities.router'
 import experiencesRoutes from '@routes/experiences.router'
 import languagesRoutes from '@routes/languages.router'
 import portfoliosRoutes from '@routes/portolios.router'
+import profileRoutes from '@routes/profile.router'
 
 const app: Koa = new Koa()
 
@@ -29,5 +30,6 @@ app.use(abilitiesRoutes.routes())
 app.use(experiencesRoutes.routes())
 app.use(languagesRoutes.routes())
 app.use(portfoliosRoutes.routes())
+app.use(profileRoutes.routes())
 
 export default app
