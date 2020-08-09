@@ -5,9 +5,10 @@ const prisma = new PrismaClient()
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const get_user = async (ctx: Context) => {
+	const { id } = ctx.params
 	const query = await prisma.user.findOne({
 		where: {
-			id: ctx.params.id
+			id: id
 		},
 		select: {
 			id: true,
@@ -75,7 +76,6 @@ const get_by_field = async (ctx: Context) => {
 				last_name: true,
 				job_title: true,
 				city: true,
-				field: true,
 				profile_picture: true
 			},
 			where : {
@@ -95,7 +95,6 @@ const get_by_field = async (ctx: Context) => {
 			last_name: true,
 			job_title: true,
 			city: true,
-			field: true,
 			profile_picture: true
 		},
 		where : {
@@ -119,7 +118,6 @@ const get_by_city = async (ctx: Context) => {
 				first_name: true,
 				last_name: true,
 				job_title: true,
-				city: true,
 				field: true,
 				profile_picture: true,
 			},
@@ -139,7 +137,6 @@ const get_by_city = async (ctx: Context) => {
 			first_name: true,
 			last_name: true,
 			job_title: true,
-			city: true,
 			field: true,
 			profile_picture: true,
 		},
