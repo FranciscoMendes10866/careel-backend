@@ -16,6 +16,8 @@ import portfoliosRoutes from '@routes/portolios.router'
 import profileRoutes from '@routes/profile.router'
 import queriesRoutes from '@routes/queries.router'
 import transactionalRoutes from '@routes/transactional.router'
+import smtpRoutes from '@routes/smtp.router'
+import newsletterRoutes from '@routes/newsletter.router'
 
 const app: Koa = new Koa()
 
@@ -35,5 +37,7 @@ app.use(portfoliosRoutes.routes())
 app.use(profileRoutes.routes())
 app.use(queriesRoutes.routes())
 app.use(transactionalRoutes.routes())
+app.use(smtpRoutes.routes())
+app.use(newsletterRoutes.routes())
 
 export default app
