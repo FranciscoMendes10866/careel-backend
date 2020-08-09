@@ -65,7 +65,8 @@ const get_user = async (ctx: Context) => {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const get_all = async (ctx: Context) => {
+const get_by_field = async (ctx: Context) => {
+	const { field } = ctx.request.body
 	if (ctx.auth_role == 'talent') {
 		const query = await prisma.profile.findMany({
 			select: {
@@ -83,6 +84,7 @@ const get_all = async (ctx: Context) => {
 				}
 			},
 			where : {
+				field: field,
 				user: {
 					is_public: true,
 					role: 'employer'
@@ -107,6 +109,7 @@ const get_all = async (ctx: Context) => {
 			}
 		},
 		where : {
+			field: field,
 			user: {
 				is_public: true,
 				role: 'talent'
@@ -116,7 +119,53 @@ const get_all = async (ctx: Context) => {
 	return ctx.body = { query }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const get_by_city = async (ctx: Context) => {
+	const { city } = ctx.request.body
+	if (ctx.auth_role == 'employer') {
+		const query = await prisma.profile.findMany({
+			select: {
+				user_id: true,
+				first_name: true,
+				last_name: true,
+				job_title: true,
+				city: true,
+				field: true,
+				profile_picture: true,
+			},
+			where: { 
+				city: city, 
+				user: { 
+					is_public: true, 
+					role: 'talent' 
+				} 
+			}
+		})
+		return ctx.body = { query }
+	}
+	const query = await prisma.profile.findMany({
+		select: {
+			user_id: true,
+			first_name: true,
+			last_name: true,
+			job_title: true,
+			city: true,
+			field: true,
+			profile_picture: true,
+		},
+		where: { 
+			city: city, 
+			user: { 
+				is_public: true, 
+				role: 'employer' 
+			} 
+		}
+	})
+	return ctx.body = { query }
+}
+
 export {
 	get_user,
-	get_all
+	get_by_field,
+	get_by_city
 }
