@@ -38,7 +38,21 @@ const newsletter_manager = async (ctx: Context) => {
 	return ctx.body = { newsletter }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const is_user_subscribed = async (ctx: Context) => {
+	const newsletter = await prisma.newsletter.findOne({
+		where: {
+			user_id: ctx.auth_id
+		},
+		select: {
+			is_subscribed: true
+		}
+	})
+	return ctx.body = { newsletter }
+}
+
 export {
 	subscribe_newsletter,
-	newsletter_manager
+	newsletter_manager,
+	is_user_subscribed
 }

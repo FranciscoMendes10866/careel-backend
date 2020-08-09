@@ -16,7 +16,7 @@ const smtp_talents = async (ctx: Context) => {
 			email: true
 		}
 	})
-	ctx.body = { talents }
+	return ctx.body = { talents }
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -32,7 +32,7 @@ const smtp_employers = async (ctx: Context) => {
 			email: true
 		}
 	})
-	ctx.body = { employers }
+	return ctx.body = { employers }
 }
 
 export {
