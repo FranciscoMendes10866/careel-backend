@@ -11,7 +11,18 @@ const get_user = async (ctx: Context) => {
 			id: id
 		},
 		select: {
-			id: true,
+			profile: {
+				select: {
+					first_name: true,
+					last_name: true,
+					country: true,
+					city: true,
+					description: true,
+					contact: true,
+					job_title: true,
+					profile_picture: true
+				}
+			},
 			education: {
 				select: {
 					id: true,
@@ -46,18 +57,6 @@ const get_user = async (ctx: Context) => {
 					id: true,
 					website_name: true,
 					website_link: true
-				}
-			},
-			profile: {
-				select: {
-					first_name: true,
-					last_name: true,
-					country: true,
-					city: true,
-					description: true,
-					contact: true,
-					job_title: true,
-					profile_picture: true
 				}
 			}
 		},
