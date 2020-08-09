@@ -2,8 +2,6 @@ import { Context } from 'koa'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 
-import mailJetConfig from '@configs/mailJet.config'
-
 const prisma = new PrismaClient()
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -25,7 +23,7 @@ const forgotten_password = async (ctx: Context) => {
     * Then the password will be encrypted and updated in the db
     **/
 	const hashed = bcrypt.hashSync(password, 10)
-	const update = await prisma.user.update({
+	await prisma.user.update({
 		where: {
 			email: email
 		},
@@ -36,40 +34,10 @@ const forgotten_password = async (ctx: Context) => {
 		/**
 		* Then we will send the new password to the given email
 		**/
-		const send_email = mailJetConfig
-			.post('send', {'version': 'v3.1'})
-			.request({
-				'Messages': [{
-					'From': {
-						'Email': process.env.MJ_FROM_EMAIL,
-						'Name': process.env.MJ_FROM_NAME
-					},
-					'To': {
-						'Email': email,
-						'Name': 'Dear user.'
-					},
-					'Variables': {
-						'given_email': email,
-						'new_password': password,
-					},
-					'TemplateLanguage': true,
-					'Subject': 'Forgotten Password',
-					'TextPart': 'Hi!',
-					'HTMLPart':
-					'<h3>Dear user, as you asked, we generated a random password so that you can access the website.</h3><br/><br/>Your account details are the following:<br/><br/>Email: {{var:given_email}}<br/>Generated password: {{var:new_password}}<br/><br/>I hope you have a nice day! And don\'t forget to change your password on the website!'
-				}]
-			})
-		send_email
-			.then((result) => {
-				console.log(result.body)
-			})
-			.catch((err) => {
-				console.log(err.statusCode)
-			})
+		return ctx.body = { email: email, password: password }
 	}).catch((err) => {
 		console.log(err)
 	})
-	ctx.body = { update }
 }
 
 export {
