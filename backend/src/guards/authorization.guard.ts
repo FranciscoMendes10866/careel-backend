@@ -14,9 +14,10 @@ const auth_guard = async (ctx: Context, next: Next) => {
 	const token = authorization.replace('Bearer', '').trim()
 	try {
 		const data = jwt.verify(token, process.env.JWT_SECRET)
-		const { id, role } = data as TokenPayload
+		const { id, role, admin } = data as TokenPayload
 		ctx.auth_id = id
 		ctx.auth_role = role
+		ctx.auth_admin = admin
 		return next()
 	} catch {
 		return ctx.throw(403)
