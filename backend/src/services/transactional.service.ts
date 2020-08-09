@@ -42,8 +42,8 @@ const forgotten_password = async (ctx: Context) => {
 		.request({
 			'Messages': [{
 				'From': {
-					'Email': 'avizinhadochico@gmail.com',
-					'Name': 'Careel'
+					'Email': process.env.MJ_FROM_EMAIL,
+					'Name': process.env.MJ_FROM_NAME
 				},
 				'To': {
 					
