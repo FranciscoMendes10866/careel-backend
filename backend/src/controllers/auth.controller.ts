@@ -29,7 +29,12 @@ const sign_in = async (ctx: Context) => {
 		ctx.throw(400, 'Password don\'t match.')
 	}
 	const token = jwt.sign({ id: exists.id, role: exists.role }, process.env.JWT_SECRET)
-	return ctx.body = { token }
+	return ctx.body =  {
+		user: {
+			is_public: exists.is_public
+		},
+		token
+	}
 }
 
 export {

@@ -18,7 +18,8 @@ module.exports = {
 				'@guards': './src/guards',
 				'@middlewares': './src/middlewares',
 				'@routes': './src/routes',
-				'@interfaces': './src/interfaces'
+				'@interfaces': './src/interfaces',
+				'@services': './src/services'
 			}
 		}]
 	],
