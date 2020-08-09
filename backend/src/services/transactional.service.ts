@@ -2,6 +2,8 @@ import { Context } from 'koa'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcrypt'
 
+import transporter from '@configs/nodeMailer.config'
+
 const prisma = new PrismaClient()
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -34,7 +36,21 @@ const forgotten_password = async (ctx: Context) => {
 		/**
 		* Then we will send the new password to the given email
 		**/
-		return ctx.body = { email: email, password: password }
+		const msg = {
+			from: 'careel@tech.com',
+			to: email,
+			subject: 'Reset Password',
+			text: `Your email ${email} and your new password ${password}.`,
+			html: `Your email <strong>${email}</strong> and your new password <strong>${password}</strong>.`
+		}
+
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		transporter.sendMail(msg, (error, info) => {
+			if (error) {
+				return ctx.throw(400, 'An error occored when sending the email.')
+			}
+			return ctx.body = 200
+		})
 	}).catch((err) => {
 		console.log(err)
 	})
