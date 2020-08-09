@@ -76,12 +76,7 @@ const get_by_field = async (ctx: Context) => {
 				job_title: true,
 				city: true,
 				field: true,
-				profile_picture: true,
-				user: {
-					select: {
-						role: true
-					}
-				}
+				profile_picture: true
 			},
 			where : {
 				field: field,
