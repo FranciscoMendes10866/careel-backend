@@ -67,39 +67,49 @@ const get_user = async (ctx: Context) => {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const get_all = async (ctx: Context) => {
 	if (ctx.auth_role == 'talent') {
-		const query = await prisma.user.findMany({
-			where: {
-				is_public: true,
-				role: 'employer'
-			},
+		const query = await prisma.profile.findMany({
 			select: {
-				id: true,
-				profile: {
+				user_id: true,
+				first_name: true,
+				last_name: true,
+				job_title: true,
+				city: true,
+				field: true,
+				profile_picture: true,
+				user: {
 					select: {
-						first_name: true,
-						last_name: true,
-						profile_picture: true,
-						job_title: true
+						role: true
 					}
+				}
+			},
+			where : {
+				user: {
+					is_public: true,
+					role: 'employer'
 				}
 			}
 		})
 		return ctx.body = { query }
 	}
-	const query = await prisma.user.findMany({
-		where: {
-			is_public: true,
-			role: 'talent'
-		},
+	const query = await prisma.profile.findMany({
 		select: {
-			id: true,
-			profile: {
+			user_id: true,
+			first_name: true,
+			last_name: true,
+			job_title: true,
+			city: true,
+			field: true,
+			profile_picture: true,
+			user: {
 				select: {
-					first_name: true,
-					last_name: true,
-					profile_picture: true,
-					job_title: true
+					role: true
 				}
+			}
+		},
+		where : {
+			user: {
+				is_public: true,
+				role: 'talent'
 			}
 		}
 	})
