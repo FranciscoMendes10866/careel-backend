@@ -1,5 +1,8 @@
 import mailjet from 'node-mailjet'
 
-const connection = mailjet.connect(process.env.MJ_KEY_01, process.env.MJ_KEY_02)
+const connection = mailjet.connect(
+	process.env.MJ_KEY, 
+	process.env.MJ_SECRET
+)
 
 export default connection

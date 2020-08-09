@@ -14,7 +14,7 @@ const forgotten_password = async (ctx: Context) => {
 	const { email } = ctx.request.body
 	const exists = await prisma.user.findOne({ where: { email } })
 	if (!exists) {
-		return ctx.throw(404)
+		return ctx.throw(404, 'Email doesn\'t exist.')
 	}
 	/**
     * If it does, the backend will generate a random password
@@ -25,50 +25,51 @@ const forgotten_password = async (ctx: Context) => {
     * Then the password will be encrypted and updated in the db
     **/
 	const hashed = bcrypt.hashSync(password, 10)
-	await prisma.user.update({
+	const update = await prisma.user.update({
 		where: {
 			email: email
 		},
 		data: {
 			password: hashed
 		}
+	}).then(() => {
+		/**
+		* Then we will send the new password to the given email
+		**/
+		const send_email = mailJetConfig
+			.post('send', {'version': 'v3.1'})
+			.request({
+				'Messages': [{
+					'From': {
+						'Email': process.env.MJ_FROM_EMAIL,
+						'Name': process.env.MJ_FROM_NAME
+					},
+					'To': {
+						'Email': email,
+						'Name': 'Dear user.'
+					},
+					'Variables': {
+						'given_email': email,
+						'new_password': password,
+					},
+					'TemplateLanguage': true,
+					'Subject': 'Forgotten Password',
+					'TextPart': 'Hi!',
+					'HTMLPart':
+					'<h3>Dear user, as you asked, we generated a random password so that you can access the website.</h3><br/><br/>Your account details are the following:<br/><br/>Email: {{var:given_email}}<br/>Generated password: {{var:new_password}}<br/><br/>I hope you have a nice day! And don\'t forget to change your password on the website!'
+				}]
+			})
+		send_email
+			.then((result) => {
+				console.log(result.body)
+			})
+			.catch((err) => {
+				console.log(err.statusCode)
+			})
+	}).catch((err) => {
+		console.log(err)
 	})
-	ctx.body = 200
-	/**
-    * Then we will send the new password to the given email
-    **/
-	const send_email = mailJetConfig
-		.post('send', {'version': 'v3.1'})
-		.request({
-			'Messages': [{
-				'From': {
-					'Email': process.env.MJ_FROM_EMAIL,
-					'Name': process.env.MJ_FROM_NAME
-				},
-				'To': {
-					
-					'Email': email,
-					'Name': 'Dear user.'
-					
-				},
-				'Variables': {
-					'given_email': email,
-					'new_password': password,
-				},
-				'TemplateLanguage': true,
-				'Subject': 'Forgotten Password',
-				'TextPart': 'Hi!',
-				'HTMLPart':
-                        '<h3>Dear user, as you asked, we generated a random password so that you can access the website.</h3><br/><br/>Your account details are the following:<br/><br/>Email: {{var:given_email}}<br/>Generated password: {{var:new_password}}<br/><br/>I hope you have a nice day! And don\'t forget to change your password on the website!'
-			}]
-		})
-	send_email
-		.then((result) => {
-			console.log(result.body)
-		})
-		.catch((err) => {
-			console.log(err.statusCode)
-		})
+	ctx.body = { update }
 }
 
 export {
