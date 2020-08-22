@@ -6,6 +6,6 @@ import { auth_guard } from '@guards/authorization.guard'
 const routerOptions: IRouterOptions = { prefix: '/api/v1/reports' }
 const router: Router = new Router(routerOptions)
 
-router.post('/', auth_guard, report)
+router.post('/:user_id', auth_guard, report)
 
 export default router
