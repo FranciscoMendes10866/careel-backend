@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://docker:docker@localhost:6060/careel"
+  url = "***"
 }
 
 generator client {
