@@ -19,6 +19,7 @@ import transactionalRoutes from '@routes/transactional.router'
 import smtpRoutes from '@routes/smtp.router'
 import newsletterRoutes from '@routes/newsletter.router'
 import appreciationsRoutes from '@routes/appreciations.router'
+import reportsRoutes from '@routes/reports.router'
 
 const app: Koa = new Koa()
 
@@ -41,5 +42,6 @@ app.use(transactionalRoutes.routes())
 app.use(smtpRoutes.routes())
 app.use(newsletterRoutes.routes())
 app.use(appreciationsRoutes.routes())
+app.use(reportsRoutes.routes())
 
 export default app
