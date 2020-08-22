@@ -9,8 +9,9 @@ const prisma = new PrismaClient()
 const sign_up = async (ctx: Context) => {
 	const { email, password, role } = ctx.request.body
 	const exists = await prisma.user.findOne({ where: { email } })
-	if (exists) {
-		ctx.throw(409, 'Account already exists.')
+	const isBanned = await prisma.banned.findMany({ where: { banned_email: email } })
+	if (exists || isBanned) {
+		ctx.throw(409, 'Account already exists or was banned.')
 	}
 	const hashed = bcrypt.hashSync(password, 10)
 	const user = await prisma.user.create({ data: { email, password: hashed, role } })

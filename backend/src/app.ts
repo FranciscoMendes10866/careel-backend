@@ -20,6 +20,7 @@ import smtpRoutes from '@routes/smtp.router'
 import newsletterRoutes from '@routes/newsletter.router'
 import appreciationsRoutes from '@routes/appreciations.router'
 import reportsRoutes from '@routes/reports.router'
+import banRoutes from '@routes/banned.router'
 
 const app: Koa = new Koa()
 
@@ -43,5 +44,6 @@ app.use(smtpRoutes.routes())
 app.use(newsletterRoutes.routes())
 app.use(appreciationsRoutes.routes())
 app.use(reportsRoutes.routes())
+app.use(banRoutes.routes())
 
 export default app

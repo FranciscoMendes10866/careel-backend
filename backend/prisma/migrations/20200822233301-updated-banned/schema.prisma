@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://docker:docker@localhost:6060/careel"
+  url = "***"
 }
 
 generator client {
@@ -25,7 +25,6 @@ model User {
   portfolios    Portfolios[]
   newsletter    Newsletter?
   appreciations Appreciations[]
-  bans          Banned[]
 }
 
 model Profile {
@@ -102,9 +101,8 @@ model Appreciations {
 
 model Banned {
   id           String   @id @default(cuid())
-  banned_email String   @unique
+  banned_email String
   ban_reason   String
+  banner_id    String
   ban_date     DateTime @default(now())
-  user         User     @relation(fields: [user_id], references: [id])
-  user_id      String
 }

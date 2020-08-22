@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://docker:docker@localhost:6060/careel"
+  url = "***"
 }
 
 generator client {
@@ -102,7 +102,7 @@ model Appreciations {
 
 model Banned {
   id           String   @id @default(cuid())
-  banned_email String   @unique
+  banned_email String
   ban_reason   String
   ban_date     DateTime @default(now())
   user         User     @relation(fields: [user_id], references: [id])

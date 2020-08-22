@@ -1,0 +1,27 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "bans"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Banned",
+      "field": "banner_id",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Banned",
+      "field": "user"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Banned",
+      "field": "user_id"
+    }
+  ]
+}
