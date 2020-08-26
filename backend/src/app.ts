@@ -18,11 +18,11 @@ import queriesRoutes from '@routes/queries.router'
 import transactionalRoutes from '@routes/transactional.router'
 import smtpRoutes from '@routes/smtp.router'
 import newsletterRoutes from '@routes/newsletter.router'
-import appreciationsRoutes from '@routes/appreciations.router'
 import reportsRoutes from '@routes/reports.router'
 import banRoutes from '@routes/banned.router'
 import supportRoutes from '@routes/support.router'
 import messagesRoutes from '@routes/messages.router'
+import followRoutes from '@routes/follows.router'
 
 const app: Koa = new Koa()
 
@@ -44,10 +44,10 @@ app.use(queriesRoutes.routes())
 app.use(transactionalRoutes.routes())
 app.use(smtpRoutes.routes())
 app.use(newsletterRoutes.routes())
-app.use(appreciationsRoutes.routes())
 app.use(reportsRoutes.routes())
 app.use(banRoutes.routes())
 app.use(supportRoutes.routes())
 app.use(messagesRoutes.routes())
+app.use(followRoutes.routes())
 
 export default app

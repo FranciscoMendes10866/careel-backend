@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://docker:docker@localhost:6060/careel"
+  url = "***"
 }
 
 generator client {
@@ -24,10 +24,11 @@ model User {
   languages     Languages[]
   portfolios    Portfolios[]
   newsletter    Newsletter?
+  appreciations Appreciations[]
   bans          Banned[]
   messages      Messages[]
-  followed_by   User[]          @relation("UserFollows", references: [id])
-  following     User[]          @relation("UserFollows", references: [id])
+  followedBy  User[]   @relation("UserFollows", references: [id])
+  following   User[]   @relation("UserFollows", references: [id])
 }
 
 model Profile {
@@ -93,6 +94,13 @@ model Newsletter {
   is_subscribed Boolean @default(false)
   user          User    @relation(fields: [user_id], references: [id])
   user_id       String  @unique
+}
+
+model Appreciations {
+  id             String @id @default(cuid())
+  appreciated_id String
+  user           User   @relation(fields: [user_id], references: [id])
+  user_id        String
 }
 
 model Banned {

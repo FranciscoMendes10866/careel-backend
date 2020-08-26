@@ -10,7 +10,7 @@ const sign_up = async (ctx: Context) => {
 	const { email, password, role } = ctx.request.body
 	const exists = await prisma.user.findOne({ where: { email } })
 	const isBanned = await prisma.banned.findMany({ where: { banned_email: email } })
-	if (exists || isBanned) {
+	if (exists || isBanned.length > 0) {
 		ctx.throw(409, 'Account already exists or was banned.')
 	}
 	const hashed = bcrypt.hashSync(password, 10)

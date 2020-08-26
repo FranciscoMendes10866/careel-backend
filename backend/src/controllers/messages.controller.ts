@@ -19,7 +19,11 @@ const delete_message = async (ctx: Context) => {
 const delete_all_messages = async (ctx: Context) => {
 	await prisma.messages.deleteMany({
 		where: {
-			sender_id: ctx.auth_id,
+			sender_id: ctx.auth_id
+		}
+	})
+	await prisma.messages.deleteMany({
+		where: {
 			receiver_id: ctx.auth_id
 		}
 	})
@@ -32,37 +36,50 @@ const send_message = async (ctx: Context) => {
 	const { user_id } = ctx.params
 	// gets the message that the sender wants to send
 	const {  message } = ctx.request.body
-	// here we are defining the "validation" booleans
-	let is_sender_following: boolean
-	let is_receiver_following: boolean
-	// we are going to verify if the sender already follows the person he wants to send a message
-	const sender_follows = await prisma.appreciations.findMany({
+	// we are going to get all users that the sender is following
+	const sender = await prisma.user.findOne({
 		where: {
-			user_id: ctx.auth_id,
-			appreciated_id: user_id
+			id: ctx.auth_id
+		},
+		select: {
+			id: true,
+			following: {
+				select: {
+					id: true
+				}
+			}
 		}
 	})
-	// if he does, we set the "validation" boolean to true, if not, sets it to false
-	if (sender_follows) {
-		is_sender_following = true
-	} else {
-		is_sender_following = false
-	}
-	// now we are going to verify if the receiver already follow the sender
-	const receiver_follows = await prisma.appreciations.findMany({
+	// we are going to get all users that the receiver is following
+	const receiver = await prisma.user.findOne({
 		where: {
-			user_id: user_id,
-			appreciated_id: ctx.auth_id
+			id: user_id
+		},
+		select: {
+			id: true,
+			following: {
+				select: {
+					id: true
+				}
+			}
 		}
 	})
-	// if he does, we set the "validation" boolean to true, if not, sets it to false
-	if (receiver_follows) {
-		is_receiver_following = true
-	} else {
-		is_receiver_following = false
-	}
-	// now we verify, if they follow each other, the sender can send a message, otherwise the sender will get an error
-	if (is_sender_following == true && is_receiver_following == true) {
+	// both users id's
+	const sender_id = sender.id
+	const receiver_id = receiver.id
+	// convert strins to an array
+	const arr1 = []
+	arr1.push(sender_id)
+	const arr2 = []
+	arr2.push(receiver_id)
+	// I will reformat the array, just to have an item as the id instead of an object
+	const sender_following = sender.following.map(obj => obj.id)
+	const receiver_following = receiver.following.map(obj => obj.id)
+	// validates if the users follow each other
+	const sender_val = arr1.some(v => receiver_following.includes(v))
+	const receiver_val = arr2.some(v => sender_following.includes(v))
+	// if they follow each other, the sender can send a message, otherwise the sender will get an error
+	if (sender_val === true && receiver_val === true) {
 		await prisma.messages.create({
 			data: {
 				message: message,
