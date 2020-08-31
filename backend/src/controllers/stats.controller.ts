@@ -4,50 +4,50 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const get_number_users = async (ctx: Context) => {
+const get_stats = async (ctx: Context) => {
+	// total number of users
 	const total = await prisma.user.count()
-	return ctx.body = { users: { total } }
-}
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const get_number_talents = async (ctx: Context) => {
-	const total = await prisma.user.count()
+	// total number of talents
 	const number_talents = await prisma.user.count({
 		where: {
 			role: 'talent'
 		}
 	})
-	const percentage = (number_talents / total) * 100
-	const approximate = percentage.toFixed(1)
-	return ctx.body = { talents: { total: total, percentage: approximate } }
-}
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const get_number_employers = async (ctx: Context) => {
-	const total = await prisma.user.count()
-	const number_employers = await prisma.user.count({
-		where: {
-			role: 'employer'
-		}
-	})
-	const percentage = (number_employers / total) * 100
-	const approximate = percentage.toFixed(1)
-	return ctx.body = { employers: { total: total, percentage: approximate } }
-}
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const get_number_found_job = async (ctx: Context) => {
-	const total = await prisma.job.count({
+	// talents stats
+	const talents_percentage = (number_talents / total) * 100
+	const talents_approximate = talents_percentage.toFixed(1)
+	// employers stats
+	const number_employers = total - number_talents
+	const employers_percentage = (number_employers / total) * 100
+	const employers_approximate = employers_percentage.toFixed(1)
+	// number of users that found a job
+	const found_job = await prisma.job.count({
 		where: {
 			found_job: true
 		}
 	})
-	return ctx.body = { found_job: { total } }
+	// response - formated json
+	return ctx.body = {
+		stats: {
+			users: {
+				total: total
+			},
+			talents: {
+				total: number_talents,
+				percentage: talents_approximate
+			},
+			employers: {
+				total: number_employers,
+				percentage: employers_approximate
+			},
+			found_job: {
+				total: found_job
+			}
+		}
+	}
 }
 
+
 export {
-	get_number_users,
-	get_number_talents,
-	get_number_employers,
-	get_number_found_job
+	get_stats
 }
