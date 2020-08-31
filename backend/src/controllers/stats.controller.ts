@@ -35,8 +35,19 @@ const get_number_employers = async (ctx: Context) => {
 	return ctx.body = { employers: { total: total, percentage: approximate } }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const get_number_found_job = async (ctx: Context) => {
+	const total = await prisma.job.count({
+		where: {
+			found_job: true
+		}
+	})
+	return ctx.body = { found_job: { total } }
+}
+
 export {
 	get_number_users,
 	get_number_talents,
-	get_number_employers
+	get_number_employers,
+	get_number_found_job
 }

@@ -35,7 +35,8 @@ const sign_in = async (ctx: Context) => {
 	const token = jwt.sign({ id: exists.id, role: exists.role, admin: exists.admin, is_public: exists.is_public }, process.env.JWT_SECRET)
 	return ctx.body =  {
 		user: {
-			is_public: exists.is_public
+			is_public: exists.is_public,
+			role: exists.role
 		},
 		token
 	}

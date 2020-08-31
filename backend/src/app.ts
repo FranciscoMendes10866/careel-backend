@@ -24,6 +24,7 @@ import supportRoutes from '@routes/support.router'
 import messagesRoutes from '@routes/messages.router'
 import followRoutes from '@routes/follows.router'
 import statsRoutes from '@routes/stats.router'
+import jobsRoutes from '@routes/jobs.router'
 
 const app: Koa = new Koa()
 
@@ -51,5 +52,6 @@ app.use(supportRoutes.routes())
 app.use(messagesRoutes.routes())
 app.use(followRoutes.routes())
 app.use(statsRoutes.routes())
+app.use(jobsRoutes.routes())
 
 export default app
