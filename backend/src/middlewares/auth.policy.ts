@@ -6,11 +6,12 @@ const auth_policy_sign_up = async (ctx: Context, next: Next) => {
 	const schema = Joi.object({
 		email: Joi.string().email().required(),
 		password: Joi.string().min(8).max(30).alphanum().required(),
-		role: Joi.string().required()
+		role: Joi.string().required(),
+		terms_conditions: Joi.boolean().required()
 	})
 
-	const { email, password, role } = ctx.request.body
-	const form_data = { email: email, password: password, role: role }
+	const { email, password, role, terms_conditions } = ctx.request.body
+	const form_data = { email: email, password: password, role: role, terms_conditions: terms_conditions }
 	const { error } = schema.validate(form_data)
 
 	if (error) {
@@ -22,6 +23,9 @@ const auth_policy_sign_up = async (ctx: Context, next: Next) => {
 			ctx.throw(400, 'Value not valid.')
 			break
 		case 'role':
+			ctx.throw(400, 'Value not valid.')
+			break
+		case 'terms_conditions':
 			ctx.throw(400, 'Value not valid.')
 			break
 		default: 

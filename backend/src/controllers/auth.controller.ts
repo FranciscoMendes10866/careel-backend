@@ -7,15 +7,18 @@ const prisma = new PrismaClient()
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const sign_up = async (ctx: Context) => {
-	const { email, password, role } = ctx.request.body
+	const { email, password, role, terms_conditions } = ctx.request.body
 	const exists = await prisma.user.findOne({ where: { email } })
 	const isBanned = await prisma.banned.findMany({ where: { banned_email: email } })
 	if (exists || isBanned.length > 0) {
-		ctx.throw(409, 'Account already exists or was banned.')
+		return ctx.throw(409, 'Account already exists or was banned.')
+	}
+	if (terms_conditions == false || terms_conditions == null) {
+		return ctx.throw(400, 'Terms and Conditions not accepted.')
 	}
 	const hashed = bcrypt.hashSync(password, 10)
-	const user = await prisma.user.create({ data: { email, password: hashed, role } })
-	return ctx.body = { user }
+	await prisma.user.create({ data: { email, password: hashed, role, terms_conditions } })
+	return ctx.body = 200
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
