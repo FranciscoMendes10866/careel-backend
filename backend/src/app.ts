@@ -27,10 +27,11 @@ import statsRoutes from '@routes/stats.router'
 import jobsRoutes from '@routes/jobs.router'
 
 const app: Koa = new Koa()
+const corsOptions = { origin: '*' }
 
 app.use(KoaEx())
 app.use(BodyParser())
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(helmet())
 app.use(logger())
 app.use(compress())
