@@ -27,7 +27,7 @@ import statsRoutes from '@routes/stats.router'
 import jobsRoutes from '@routes/jobs.router'
 
 const app: Koa = new Koa()
-const corsOptions = { origin: '*' }
+const corsOptions = { origin: process.env.CORS_WB }
 
 app.use(KoaEx())
 app.use(BodyParser())
