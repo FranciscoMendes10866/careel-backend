@@ -7,7 +7,7 @@
     "update": "yarn upgrade --latest",
     "dev": "clear && ts-node-dev --cls -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify --files ./src/cluster.ts",
     "build": "babel src --extensions \".js,.ts\" --out-dir build --copy-files --no-copy-ignored",
-    "serve": "node ./build/cluster.js",
+    "serve": "node ./build/main.js",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --fix src --ext .ts",
     "prisma:studio": "clear && prisma studio --experimental",
