@@ -36,40 +36,14 @@ const sign_in = async (ctx: Context) => {
 	return ctx.body = {
 		user: {
 			is_public: exists.is_public,
-			role: exists.role
+			role: exists.role,
+			is_admin: exists.admin,
 		},
 		token
 	}
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const admin_sign_in = async (ctx: Context) => {
-	const { email, password } = ctx.request.body
-	if (email === 'admin@damasus.io' && password === 'damasusadmin' ) {
-		const exists = await prisma.user.findOne({ where: { email } })
-		if (!exists) {
-			ctx.throw(404, 'Account not found.')
-		}
-		const valid = await bcrypt.compare(password, exists.password)
-		if (!valid) {
-			ctx.throw(400, 'Password don\'t match.')
-		}
-		const token = jwt.sign({ id: exists.id, role: exists.role, admin: exists.admin, is_public: exists.is_public }, process.env.JWT_SECRET)
-		return ctx.body = {
-			user: {
-				is_public: exists.is_public,
-				role: exists.role
-			},
-			token
-		}
-	} else {
-		return ctx.throw(403)
-	}
-}
-
-
 export {
 	sign_up,
-	sign_in,
-	admin_sign_in
+	sign_in
 }
