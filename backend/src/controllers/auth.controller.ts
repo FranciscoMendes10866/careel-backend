@@ -38,6 +38,7 @@ const sign_in = async (ctx: Context) => {
 			is_public: exists.is_public,
 			role: exists.role,
 			is_admin: exists.admin,
+			newsletter: exists.newsletter,
 		},
 		token
 	}
