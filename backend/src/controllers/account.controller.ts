@@ -61,9 +61,24 @@ const change_newsletter = async (ctx: Context) => {
 	return ctx.body = 200
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const change_job = async (ctx: Context) => {
+	const { job } = ctx.request.body
+	await prisma.user.update({
+		where: {
+			id: ctx.auth_id
+		},
+		data: {
+			job: job
+		}
+	})
+	return ctx.body = 200
+}
+
 export {
 	change_password,
 	change_email,
 	change_is_public,
-	change_newsletter
+	change_newsletter,
+	change_job
 }

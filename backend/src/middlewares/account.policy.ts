@@ -89,9 +89,32 @@ const update_newsletter_policy = async (ctx: Context, next: Next) => {
 	return next()
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const update_job_policy = async (ctx: Context, next: Next) => {
+	const schema = Joi.object({
+		job: Joi.boolean().required()
+	})
+
+	const { job } = ctx.request.body
+	const { error } = schema.validate({ job: job })
+
+	if (error) {
+		switch (error.details[0].context.key) {
+		case 'job':
+			ctx.throw(400, 'Value not valid.')
+			break
+		default: 
+			ctx.throw(400, 'Value not valid.')
+			break
+		}
+	}
+	return next()
+}
+
 export {
 	update_password_policy,
 	update_email_policy,
 	update_is_public_policy,
-	update_newsletter_policy
+	update_newsletter_policy,
+	update_job_policy
 }
