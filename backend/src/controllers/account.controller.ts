@@ -47,8 +47,23 @@ const change_is_public = async (ctx: Context) => {
 	return ctx.body = 200
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const change_newsletter = async (ctx: Context) => {
+	const { newsletter } = ctx.request.body
+	await prisma.user.update({
+		where: {
+			id: ctx.auth_id
+		},
+		data: {
+			newsletter: newsletter
+		}
+	})
+	return ctx.body = 200
+}
+
 export {
 	change_password,
 	change_email,
-	change_is_public
+	change_is_public,
+	change_newsletter
 }
