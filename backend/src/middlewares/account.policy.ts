@@ -92,15 +92,19 @@ const update_newsletter_policy = async (ctx: Context, next: Next) => {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const update_job_policy = async (ctx: Context, next: Next) => {
 	const schema = Joi.object({
-		job: Joi.boolean().required()
+		job: Joi.boolean().required(),
+		is_public: Joi.boolean().required()
 	})
 
-	const { job } = ctx.request.body
-	const { error } = schema.validate({ job: job })
+	const { job, is_public } = ctx.request.body
+	const { error } = schema.validate({ job: job, is_public: is_public })
 
 	if (error) {
 		switch (error.details[0].context.key) {
 		case 'job':
+			ctx.throw(400, 'Value not valid.')
+			break
+		case 'is_public':
 			ctx.throw(400, 'Value not valid.')
 			break
 		default: 

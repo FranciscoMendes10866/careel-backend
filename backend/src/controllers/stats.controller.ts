@@ -21,9 +21,17 @@ const get_stats = async (ctx: Context) => {
 	const employers_percentage = (number_employers / total) * 100
 	const employers_approximate = employers_percentage.toFixed(1)
 	// number of users that found a job
-	const found_job = await prisma.job.count({
+	const found_job = await prisma.user.count({
 		where: {
-			found_job: true
+			job: true,
+			role: 'talent'
+		}
+	})
+	// number of users that are looking for a job
+	const finding_job = await prisma.user.count({
+		where: {
+			job: false,
+			role: 'talent'
 		}
 	})
 	// response - formated json
@@ -40,8 +48,9 @@ const get_stats = async (ctx: Context) => {
 				total: number_employers,
 				percentage: employers_approximate
 			},
-			found_job: {
-				total: found_job
+			job: {
+				found: found_job,
+				finding: finding_job
 			}
 		}
 	}
