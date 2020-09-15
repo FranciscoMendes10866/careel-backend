@@ -76,10 +76,42 @@ const change_job = async (ctx: Context) => {
 	return ctx.body = 200
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const get_devices = async (ctx: Context) => {
+	await prisma.security.findMany({
+		where: {
+			id: ctx.auth_id
+		},
+		select: {
+			id: true,
+			device_platform: true,
+			device_product: true,
+			login_date: true
+		}
+	})
+	return ctx.body = 200
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const change_devices = async (ctx: Context) => {
+	const { device_allowed } = ctx.request.body
+	await prisma.security.update({
+		where: {
+			id: ctx.auth_id
+		},
+		data: {
+			device_allowed: device_allowed
+		}
+	})
+	return ctx.body = 200
+}
+
 export {
 	change_password,
 	change_email,
 	change_is_public,
 	change_newsletter,
-	change_job
+	change_job,
+	get_devices,
+	change_devices
 }
