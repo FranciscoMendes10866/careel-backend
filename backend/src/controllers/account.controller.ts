@@ -86,6 +86,7 @@ const get_devices = async (ctx: Context) => {
 			id: true,
 			device_platform: true,
 			device_product: true,
+			device_allowed: true,
 			login_date: true
 		}
 	})
@@ -93,11 +94,11 @@ const get_devices = async (ctx: Context) => {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const change_devices = async (ctx: Context) => {
+const update_devices = async (ctx: Context) => {
 	const { device_allowed } = ctx.request.body
 	await prisma.security.update({
 		where: {
-			id: ctx.auth_id
+			id: ctx.params.id
 		},
 		data: {
 			device_allowed: device_allowed
@@ -113,5 +114,5 @@ export {
 	change_newsletter,
 	change_job,
 	get_devices,
-	change_devices
+	update_devices
 }
