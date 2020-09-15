@@ -78,9 +78,9 @@ const change_job = async (ctx: Context) => {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const get_devices = async (ctx: Context) => {
-	await prisma.security.findMany({
+	const devices = await prisma.security.findMany({
 		where: {
-			id: ctx.auth_id
+			user_id: ctx.auth_id
 		},
 		select: {
 			id: true,
@@ -89,7 +89,7 @@ const get_devices = async (ctx: Context) => {
 			login_date: true
 		}
 	})
-	return ctx.body = 200
+	return ctx.body = { devices }
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

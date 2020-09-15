@@ -115,10 +115,33 @@ const update_job_policy = async (ctx: Context, next: Next) => {
 	return next()
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const update_devices_policy = async (ctx: Context, next: Next) => {
+	const schema = Joi.object({
+		device_allowed: Joi.boolean().required()
+	})
+
+	const { device_allowed } = ctx.request.body
+	const { error } = schema.validate({ device_allowed: device_allowed })
+
+	if (error) {
+		switch (error.details[0].context.key) {
+		case 'device_allowed':
+			ctx.throw(400, 'Value not valid.')
+			break
+		default: 
+			ctx.throw(400, 'Value not valid.')
+			break
+		}
+	}
+	return next()
+}
+
 export {
 	update_password_policy,
 	update_email_policy,
 	update_is_public_policy,
 	update_newsletter_policy,
-	update_job_policy
+	update_job_policy,
+	update_devices_policy
 }
