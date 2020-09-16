@@ -87,6 +87,7 @@ const get_devices = async (ctx: Context) => {
 			device_platform: true,
 			device_product: true,
 			device_allowed: true,
+			device_type: true,
 			login_date: true
 		}
 	})
