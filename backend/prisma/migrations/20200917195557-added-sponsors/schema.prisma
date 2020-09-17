@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://docker:docker@localhost:6060/careel"
+  url = "***"
 }
 
 generator client {
@@ -31,7 +31,7 @@ model User {
   followed_by      User[]         @relation("UserFollows", references: [id])
   following        User[]         @relation("UserFollows", references: [id])
   security         Security[]
-  sponsorships     Sponsorships[]
+  Sponsorships     Sponsorships[]
 }
 
 model Profile {
