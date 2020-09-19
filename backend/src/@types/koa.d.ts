@@ -1,5 +1,3 @@
-import { Context } from 'koa'
-
 declare module 'koa' {
     interface Context {
         auth_id: string,
