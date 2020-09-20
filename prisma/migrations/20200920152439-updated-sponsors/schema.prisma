@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://docker:docker@localhost:6060/careel"
+  url = "***"
 }
 
 generator client {
@@ -127,6 +127,7 @@ model Sponsorships {
   sponsor_date DateTime @default(now())
   sponsor_logo String?
   sponsor_link String?
+  still_online Boolean  @default(true)
   user         User     @relation(fields: [user_id], references: [id])
   user_id      String   @unique
 }
